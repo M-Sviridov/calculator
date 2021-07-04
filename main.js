@@ -50,7 +50,9 @@ function operate(operator, num1, num2) {
 numPad.forEach(button => {
     button.addEventListener('click', () => {
         if (display.textContent === '0' && button.textContent === '0');
-        else {
+        else if (display.textContent === '0' && button.textContent !== '0') {
+            display.textContent = button.textContent;
+        } else {
             display.textContent += button.textContent;
         }
     });
