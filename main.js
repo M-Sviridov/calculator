@@ -87,3 +87,31 @@ operators.forEach(button => {
         }
     });
 });
+
+acButton.addEventListener('click', () => {
+    display.textContent = 0;
+    num1 = undefined;
+    num2 = undefined;
+    once = true;
+});
+
+backspaceButton.addEventListener('click', () => {
+    display.textContent = display.textContent.slice(0, -1);
+    if (display.textContent === '') {
+        display.textContent = '0';
+    }
+});
+
+plusMinusButton.addEventListener('click', () => {
+    if (Number(display.textContent) > 0) {
+        display.textContent = -Math.abs(Number(display.textContent));
+    } else if (Number(display.textContent) < 0) {
+        display.textContent = Math.abs(Number(display.textContent));
+    }
+});
+
+equalButton.addEventListener('click', () => {
+    num2 = Number(display.textContent);
+    display.textContent = operate(operator, num1, num2)
+    num1 = Number(display.textContent);
+})
