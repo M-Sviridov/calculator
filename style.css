@@ -1,5 +1,5 @@
 html {
-    background-color: #f4f3ee;
+    background-color: #a7b395;
     width: 100%;
     height: 100%;
     display: flex;
@@ -58,7 +58,7 @@ html {
 }
 
 .operators {
-    background-color: #39a450;
+    background-color: #a7b395;
     display: grid;
     justify-content: center;
     align-items: center;
