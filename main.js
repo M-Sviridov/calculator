@@ -29,36 +29,61 @@ const numPad = [zeroButton, oneButton, twoButton,
 const operators = [additionButton, substractionButton,
     multiplicationButton, divisionButton];
 
-let add = (a, b) => a + b;
-let substract = (a, b) => a - b;
-let multiply = (a, b) => a * b;
-let divide = (a, b) => a / b;
+let num1;
+let num2;
+let once = true;
 
 function operate(operator, num1, num2) {
 
     if (operator === '+') {
-        return add(num1, num2);
+        return num1 + num2;
     } else if (operator === '−') {
-        return substract(num1, num2);
+        return num1 - num2;
     } else if (operator === '×') {
-        return multiply(num1, num2);
+        return num1 * num2;
     } else if (operator === '÷') {
-        return divide(num1, num2);
+        return num1 / num2;
     };
 };
 
 numPad.forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', (e) => {
         if (display.textContent === '0' && button.textContent === '0');
         else if (display.textContent === '0' && button.textContent !== '0') {
             display.textContent = button.textContent;
+        } else if (num1 !== undefined && num2 !== undefined) {
+            display.textContent = button.textContent;
+            num2 = undefined;
+        } else if (num1 !== undefined && once) {
+            display.textContent = button.textContent;
+            once = false;
         } else {
             display.textContent += button.textContent;
         }
+        console.log(e.target);
     });
+
 });
 
 dotButton.addEventListener('click', () => {
     display.textContent += dotButton.textContent;
 }, { once: true }
 );
+
+operators.forEach(button => {
+    button.addEventListener('click', () => {
+        if (num1 === undefined && num2 === undefined) {
+            num1 = Number(display.textContent);
+            console.log(num1 + ' num1');
+            operator = button.textContent;
+        } else if (num1 !== undefined && num2 === undefined) {
+            num2 = Number(display.textContent);
+            console.log(num2 + ' num2');
+            display.textContent = operate(operator, num1, num2)
+            num1 = operate(operator, num1, num2);
+            operator = button.textContent;
+        } else {
+            operator = button.textContent;
+        }
+    });
+});
