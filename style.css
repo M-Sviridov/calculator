@@ -1,5 +1,5 @@
 html {
-    background-color: #a7b395;
+    background-color: #849f89;
     width: 100%;
     height: 100%;
     display: flex;
@@ -68,7 +68,7 @@ html {
 }
 
 .operators:active {
-    background-color: #005605;
+    background-color: #849f89;
 }
 
 #red-button {
