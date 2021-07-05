@@ -32,6 +32,7 @@ const operators = [additionButton, substractionButton,
 let num1;
 let num2;
 let once = true;
+let oneDot = true;
 
 function operate(operator, num1, num2) {
 
@@ -65,10 +66,19 @@ numPad.forEach(button => {
 
 });
 
+// function addDot() {
+//     if (display.textContent.indexOf('.') > -1);
+//     else {
+//         display.textContent += '.';
+//     }
+// }
+
 dotButton.addEventListener('click', () => {
-    display.textContent += dotButton.textContent;
-}, { once: true }
-);
+    if (display.textContent.indexOf('.') > -1);
+    else {
+        display.textContent += '.';
+    }
+});
 
 operators.forEach(button => {
     button.addEventListener('click', () => {
@@ -111,7 +121,12 @@ plusMinusButton.addEventListener('click', () => {
 });
 
 equalButton.addEventListener('click', () => {
-    num2 = Number(display.textContent);
-    display.textContent = operate(operator, num1, num2)
-    num1 = Number(display.textContent);
-})
+    if (num1 === undefined);
+    else if (num1 !== undefined) {
+        num2 = Number(display.textContent);
+        display.textContent = operate(operator, num1, num2);
+        num1 = undefined;
+        num2 = undefined;
+        once = true;
+    }
+});
