@@ -42,6 +42,8 @@ function operate(operator, num1, num2) {
         return num1 - num2;
     } else if (operator === '×') {
         return num1 * num2;
+    } else if (operator === '÷' && num2 === 0) {
+        return alert('You can\'t divide by zero, my friend.')
     } else if (operator === '÷') {
         return num1 / num2;
     }
