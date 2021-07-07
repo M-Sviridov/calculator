@@ -43,7 +43,8 @@ function operate(operator, num1, num2) {
     } else if (operator === '×') {
         return num1 * num2;
     } else if (operator === '÷' && num2 === 0) {
-        return alert('You can\'t divide by zero, my friend.')
+        alert('Division by zero impossible.')
+        return reset();
     } else if (operator === '÷') {
         return num1 / num2;
     }
@@ -67,9 +68,10 @@ function addDot() {
 
 // Resets the calculator and all the data
 function reset() {
-    display.textContent = 0;
+    display.textContent = '0';
     num1 = undefined;
     num2 = undefined;
+    operator = undefined;
     once = true;
 }
 
@@ -91,6 +93,9 @@ function equal() {
         num1 = undefined;
         num2 = undefined;
         once = true;
+        if (display.textContent === '') {
+            display.textContent = '0';
+        }
     }
 }
 
@@ -179,11 +184,7 @@ window.addEventListener('keydown', (e) => {
             positiveNegative();
             break;
 
-        case e.key === '=':
-            equal();
-            break;
-
-        case e.key === 'Enter':
+        case e.key === 'Enter' || e.key === '=':
             equal();
             break;
 
