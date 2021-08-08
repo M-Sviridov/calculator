@@ -3,4 +3,4 @@ Reproducing a fully functional basic calculator by using a combination of HTML, 
 
 You can see the project live at this URL: https://m-sviridov.github.io/calculator/
 
-Font used (if you want to install): https://developer.apple.com/fonts/ 'SF Pro'
+Font used (if you want to install and see final result): https://developer.apple.com/fonts/ 'SF Pro'
