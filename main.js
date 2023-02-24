@@ -41,6 +41,25 @@ const inputButtons = [
   nine,
 ];
 
+dot.addEventListener("click", () => {
+  if (!display.textContent.includes(".")) {
+    display.textContent += ".";
+  }
+});
+
+clear.addEventListener("click", () => {
+  display.textContent = "0";
+  clear.textContent = "AC";
+});
+
+pm.addEventListener("click", () => {
+  display.textContent = -display.textContent;
+});
+
+percent.addEventListener("click", () => {
+  display.textContent = display.textContent / 100;
+});
+
 inputButtons.forEach((button) => {
   button.addEventListener("click", () => {
     if (
@@ -48,10 +67,12 @@ inputButtons.forEach((button) => {
       display.textContent == "0"
     ) {
       display.textContent = button.textContent;
+      clear.textContent = "C";
     } else if (!checkInitialState(display.textContent, button.textContent)) {
       display.textContent += button.textContent;
     } else {
       display.textContent = button.textContent;
+      clear.textContent = "C";
     }
   });
 });
