@@ -136,5 +136,8 @@ function calculate(operator) {
 }
 
 equal.addEventListener("click", () => {
-  calculate(firstOperator);
+  if (firstOperator != null) {
+    calculate(firstOperator);
+    firstNum = display.textContent;
+  }
 });
