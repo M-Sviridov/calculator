@@ -1,4 +1,4 @@
-const operate = (operator, x, y) => operator(x, y);
+const operate = (operator, x, y) => operator(parseInt(x), parseInt(y));
 const multiply = (x, y) => x * y;
 const subtract = (x, y) => x - y;
 const divide = (x, y) => x / y;
@@ -28,7 +28,7 @@ const eight = document.querySelector(".eight");
 const nine = document.querySelector(".nine");
 const dot = document.querySelector(".dot");
 
-const inputButtons = [
+const digitButtons = [
   zero,
   one,
   two,
@@ -41,15 +41,30 @@ const inputButtons = [
   nine,
 ];
 
+const operations = {
+  divides: divide,
+  times: multiply,
+  minus: subtract,
+  plus: add,
+};
+
+const operators = [divides, times, minus, plus];
+
+let firstNum = null;
+let secondNum = null;
+let firstOperator = null;
+let secondOperator = null;
+let initialState = true;
+
 dot.addEventListener("click", () => {
   if (!display.textContent.includes(".")) {
     display.textContent += ".";
+    initialState = false;
   }
 });
 
 clear.addEventListener("click", () => {
-  display.textContent = "0";
-  clear.textContent = "AC";
+  reset();
 });
 
 pm.addEventListener("click", () => {
@@ -60,33 +75,66 @@ percent.addEventListener("click", () => {
   display.textContent = display.textContent / 100;
 });
 
-inputButtons.forEach((button) => {
+digitButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    if (
-      !checkInitialState(display.textContent, button.textContent) &&
-      display.textContent == "0"
-    ) {
-      display.textContent = button.textContent;
-      clear.textContent = "C";
-    } else if (!checkInitialState(display.textContent, button.textContent)) {
-      display.textContent += button.textContent;
+    updateDisplay(button.textContent);
+  });
+});
+
+operators.forEach((operator) => {
+  operator.addEventListener("click", () => {
+    if (operator == plus) {
+      calculate("plus");
+    } else if (operator == minus) {
+      calculate("minus");
+    } else if (operator == times) {
+      calculate("times");
     } else {
-      display.textContent = button.textContent;
-      clear.textContent = "C";
+      calculate("divides");
     }
   });
 });
 
-function checkInitialState(displayContent, buttonContent) {
-  let initialState = true;
+plus.addEventListener("click", () => {});
 
-  if (displayContent == "0" && buttonContent != "0") {
+function updateDisplay(content) {
+  if (initialState == true) {
+    display.textContent = content;
+    clear.textContent = "C";
     initialState = false;
-  } else if (displayContent == "0" && buttonContent == ".") {
-    initialState = false;
-  } else if (displayContent != "0") {
+  } else if (initialState == false && display.textContent == "0") {
+    display.textContent = content;
+  } else {
+    display.textContent += content;
     initialState = false;
   }
-
-  return initialState;
 }
+
+function reset() {
+  display.textContent = "0";
+  clear.textContent = "AC";
+  initialState = true;
+  firstNum = null;
+  secondNum = null;
+  firstOperator = null;
+  secondOperator = null;
+}
+
+function calculate(operator) {
+  if (firstNum == null) {
+    firstNum = display.textContent;
+    firstOperator = operations[operator];
+    initialState = true;
+  } else {
+    secondNum = display.textContent;
+    secondOperator = operations[operator];
+    initialState = true;
+    display.textContent = operate(firstOperator, firstNum, secondNum);
+    firstOperator = secondOperator;
+    firstNum = display.textContent;
+  }
+}
+
+equal.addEventListener("click", () => {
+  calculate(firstOperator);
+});
