@@ -1,8 +1,10 @@
-const operate = (operator, x, y) => operator(parseInt(x), parseInt(y));
-const multiply = (x, y) => x * y;
-const subtract = (x, y) => x - y;
-const divide = (x, y) => x / y;
-const add = (x, y) => x + y;
+const DISPLAY_LENGTH = 7;
+
+const operate = (operator, x, y) => operator(x, y);
+const multiply = (x, y) => parseInt(x) * parseInt(y);
+const subtract = (x, y) => parseInt(x) - parseInt(y);
+const divide = (x, y) => parseFloat(x) / parseFloat(y);
+const add = (x, y) => parseInt(x) + parseInt(y);
 
 const display = document.querySelector(".display-text");
 
@@ -57,7 +59,7 @@ let secondOperator = null;
 let initialState = true;
 
 dot.addEventListener("click", () => {
-  if (!display.textContent.includes(".")) {
+  if (!display.textContent.includes(".") && display.textContent.length != 7) {
     display.textContent += ".";
     initialState = false;
   }
@@ -77,7 +79,11 @@ percent.addEventListener("click", () => {
 
 digitButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    updateDisplay(button.textContent);
+    if (display.textContent.length == DISPLAY_LENGTH && firstOperator != null) {
+      updateDisplay(button.textContent);
+    } else if (display.textContent.length < DISPLAY_LENGTH) {
+      updateDisplay(button.textContent);
+    }
   });
 });
 
@@ -91,22 +97,28 @@ operators.forEach((operator) => {
       calculate("times");
     } else {
       calculate("divides");
+      console.log("dividing");
     }
   });
 });
-
-plus.addEventListener("click", () => {});
 
 function updateDisplay(content) {
   if (initialState == true) {
     display.textContent = content;
     clear.textContent = "C";
     initialState = false;
+    console.log("1");
   } else if (initialState == false && display.textContent == "0") {
     display.textContent = content;
+    console.log("2");
+  } else if (display.textContent.length == DISPLAY_LENGTH) {
+    display.textContent = content;
+    initialState = false;
+    console.log("3");
   } else {
     display.textContent += content;
     initialState = false;
+    console.log("4");
   }
 }
 
@@ -128,16 +140,19 @@ function calculate(operator) {
   } else {
     secondNum = display.textContent;
     secondOperator = operations[operator];
-    initialState = true;
     display.textContent = operate(firstOperator, firstNum, secondNum);
     firstOperator = secondOperator;
     firstNum = display.textContent;
+    initialState = true;
   }
 }
 
 equal.addEventListener("click", () => {
-  if (firstOperator != null) {
+  if (firstOperator != null && secondNum == null) {
+    secondNum = display.textContent;
     calculate(firstOperator);
-    firstNum = display.textContent;
+  } else if (firstOperator != null) {
+    calculate(firstOperator);
   }
+  firstNum = display.textContent;
 });
