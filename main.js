@@ -83,6 +83,11 @@ digitButtons.forEach((button) => {
       updateDisplay(button.textContent);
     } else if (display.textContent.length < DISPLAY_LENGTH) {
       updateDisplay(button.textContent);
+    } else if (
+      display.textContent.length >= DISPLAY_LENGTH &&
+      firstNum != null
+    ) {
+      updateDisplay(button.textContent);
     }
   });
 });
@@ -97,7 +102,6 @@ operators.forEach((operator) => {
       calculate("times");
     } else {
       calculate("divides");
-      console.log("dividing");
     }
   });
 });
@@ -107,18 +111,13 @@ function updateDisplay(content) {
     display.textContent = content;
     clear.textContent = "C";
     initialState = false;
-    console.log("1");
   } else if (initialState == false && display.textContent == "0") {
     display.textContent = content;
-    console.log("2");
   } else if (display.textContent.length == DISPLAY_LENGTH) {
-    display.textContent = content;
     initialState = false;
-    console.log("3");
   } else {
     display.textContent += content;
     initialState = false;
-    console.log("4");
   }
 }
 
