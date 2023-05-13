@@ -1,4 +1,4 @@
-const DISPLAY_LENGTH = 7;
+const DISPLAY_LENGTH = 8;
 
 const operate = (operator, x, y) => operator(x, y);
 const multiply = (x, y) => parseInt(x) * parseInt(y);
