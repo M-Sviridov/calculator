@@ -1,10 +1,10 @@
 const DISPLAY_LENGTH = 8;
 
-const operate = (operator, x, y) => operator(x, y);
-const multiply = (x, y) => parseInt(x) * parseInt(y);
-const subtract = (x, y) => parseInt(x) - parseInt(y);
-const divide = (x, y) => parseFloat(x) / parseFloat(y);
-const add = (x, y) => parseInt(x) + parseInt(y);
+const operate = (operator, x, y) => operator(parseFloat(x), parseFloat(y));
+const multiply = (x, y) => x * y;
+const subtract = (x, y) => x - y;
+const divide = (x, y) => x / y;
+const add = (x, y) => x + y;
 
 const display = document.querySelector(".display-text");
 
@@ -59,7 +59,7 @@ let secondOperator = null;
 let initialState = true;
 
 dot.addEventListener("click", () => {
-  if (!display.textContent.includes(".") && display.textContent.length != 7) {
+  if (!display.textContent.includes(".") && display.textContent.length != 8) {
     display.textContent += ".";
     initialState = false;
   }
@@ -144,6 +144,7 @@ function calculate(operator) {
     firstNum = display.textContent;
     initialState = true;
   }
+  toScientificNotation(display.textContent);
 }
 
 equal.addEventListener("click", () => {
@@ -154,4 +155,12 @@ equal.addEventListener("click", () => {
     calculate(firstOperator);
   }
   firstNum = display.textContent;
+  secondNum = null;
 });
+
+function toScientificNotation(string) {
+  if (string.length > DISPLAY_LENGTH) {
+    let num = parseFloat(string);
+    display.textContent = num.toExponential(3);
+  }
+}
